@@ -1,0 +1,62 @@
+
+<!doctype html>
+<!--[if IE 8]> <html class="lt-ie10 lt-ie9 ie8"> <![endif]-->
+<!--[if IE 9]> <html class="lt-ie10 ie9"> <![endif]-->
+<!--[if gt IE 9] <!-->
+<html>
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>ejercicio 1</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="robots" content="all" />
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css" /-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="styles/main.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+    <div class="container">
+        <h1>Ejercicio 1</h1>
+
+        <p>
+            <span>Nombre</span>
+            <input type="text" name="" data-js="nombre">
+        </p>
+        <p>
+            <span>apellido</span>
+            <input type="text" name="" data-js="apellido">
+        </p>
+        <p>
+            <span>mail</span>
+            <input type="text" name="" data-js="email">
+        </p>
+        <p>
+            <input type="button" value="enviar" name="" class="btn btn-primary" data-js="submit">
+        </p>
+
+        <table class="table">
+            <thead class="thead-default">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>mail</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody data-js="info-table">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts/main.js"></script>
+
+</body>
+</html>
