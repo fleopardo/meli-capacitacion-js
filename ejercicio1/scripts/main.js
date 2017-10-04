@@ -1,35 +1,92 @@
 //use strict;
 
-function createPerson() {
-    var myPerson = {
-        'nombre' : nombre.value,
-        'apellido' : apellido.value,
-        'email' : email.value
-    };
+var nombre = document.querySelector('[data-js = nombre]'),
+	apellido = document.querySelector('[data-js = apellido]'),
+	email = document.querySelector('[data-js = email]'),
+	table = document.querySelector('.table'),
+	list = [],
+    selectedPerson = {};
 
-    list.push(myPerson);
+// creo header de la tabla en el onload
+// function createHeader() {
+// 	var tableHeader = document.createElement('tr');
+
+// 	Object.keys(model).forEach(function(key, index) {
+// 		tableHeader.insertCell(index).innerHTML = key;
+//     });
+
+// 	table.appendChild(tableHeader);
+// }
+
+function createPerson() {
+
+	var persona = {
+		nombre: nombre.value, 
+		apellido: apellido.value, 
+		email: email.value, 
+		id: Math.random()
+	}
+	
+	list.push(persona);
+	printPerson(persona);
 }
 
-function printPerson() {
-	htmlContent = '';
+function printPerson(element) {
+    	var rowTable = document.createElement('tr'),
+    		editButton = document.createElement('input');
+    	
+    	editButton.type = 'button';
+    	editButton.value = 'edit';
+		editButton.id = element.id;
+    	editButton.addEventListener('click', getPerson);
+		
+		Object.keys(element).forEach(function(key, index){
+			if(key !== 'id') {
+				rowTable.insertCell(index).innerHTML = element[key];
+			}
+		});
 
-    list.forEach(function(valor, indice) {
-        htmlContent +='<tr>';
+		rowTable.insertCell().appendChild(editButton);
+    	
+    	table.appendChild(rowTable);
 
-        Object.keys(list[indice]).forEach(function(key) {
-            htmlContent += '<td>' + list[indice][key] + '</td>';
-        });
+    	clearFields();
+}
 
-        // var newBtn = document.createElement(button);
-        // newBtn.addEventListener(jkjhdskj )
+function printAllPersons() {
+	cleanTable()
 
-        htmlContent +='<td><input type="button" class="btn btn-secondary edit-button" data-js="edit" data-edit="' + indice + '" value="Editar"></td>';
-
-        htmlContent +='</tr>';
+    list.forEach(function(person) {
+    	printPerson(person);
     });
+}
 
-    row.innerHTML = htmlContent;
-    //row.addNode(newbtn)
+function getPerson(e) {
+	var personId = e.target.id;
+	var result = list.find(function onFind(persona){
+		return persona.id == personId;
+	});
+	selectedPerson = result;
+	fillFields(result);
+}
+
+function SaveOnEdit() {
+	selectedPerson.nombre = nombre.value;
+	selectedPerson.apellido = apellido.value;
+	selectedPerson.email = email.value;
+	printAllPersons();
+}
+
+function fillFields (person) {
+	document.querySelectorAll('input[type=text]').forEach(function(element) {
+		if (element.getAttribute('data-js') == 'nombre') {
+			element.value = person.nombre;
+		}else if(element.getAttribute('data-js') == 'apellido') {
+			element.value = person.apellido;
+		}else {
+			element.value = person.email;
+		}
+	});
 }
 
 function clearFields() {
@@ -38,76 +95,24 @@ function clearFields() {
 	});
 }
 
-function addPerson() {
-    createPerson();
-    printPerson();
-    clearFields()
-}
-
-function editPerson(e) {
-	if (e.target.getAttribute('data-js') == 'edit') {
-		
-		var indexRow = e.target.getAttribute('data-edit');
-		console.log(indexRow);
-
-		document.querySelectorAll('input[type=text').forEach(function(element) {
-			if (element.getAttribute('data-js') == 'nombre') {
-				element.value = list[indexRow].nombre;
-			}else if(element.getAttribute('data-js') == 'apellido') {
-				element.value = list[indexRow].apellido;
-			}else {
-				element.value = list[indexRow].email;
-			}
-		});
-
+function cleanTable() {
+	while (table.firstChild) {
+	    table.removeChild(table.firstChild);
 	}
 }
 
-function fillFields() {
-	
+function editPerson(e) {
+	document.querySelectorAll('input[type=text]').forEach(function(element) {
+		if (element.getAttribute('data-js') == 'nombre') {
+			element.value = list[indexRow].nombre;
+		}else if(element.getAttribute('data-js') == 'apellido') {
+			element.value = list[indexRow].apellido;
+		}else {
+			element.value = list[indexRow].email;
+		}
+	});
 }
 
-
-var nombre = document.querySelector('[data-js = nombre]'),
-	apellido = document.querySelector('[data-js = apellido]'),
-	email = document.querySelector('[data-js = email]'),
-	list = [],
-    row = document.querySelector('[data-js=info-table]'),
-    htmlContent = '';
-
-
-//listener de buttons
-
 //listener submit
-document.querySelector('[data-js=submit]').addEventListener('click', addPerson);
-
-//listener edit
-document.querySelector('.table').addEventListener('click', editPerson);
-
-	// if (e.target.getAttribute('data-js') == 'edit') {
-		
-	// 	var indexRow = e.target.getAttribute('data-edit');
-	// 	console.log(indexRow);
-
-	// 	document.querySelectorAll('input[type=text').forEach(function(element) {
-	// 		if (element.getAttribute('data-js') == 'nombre') {
-	// 			element.value = list[indexRow].nombre;
-	// 		}else if(element.getAttribute('data-js') == 'apellido') {
-	// 			element.value = list[indexRow].apellido;
-	// 		}else {
-	// 			element.value = list[indexRow].email;
-	// 		}
-	// 	});
-
-	// }
-
-
-
-
-
-
-
-
-
-
-
+document.querySelector('[data-js=submit]').addEventListener('click', createPerson);
+document.querySelector('[data-js=modify]').addEventListener('click', SaveOnEdit);
